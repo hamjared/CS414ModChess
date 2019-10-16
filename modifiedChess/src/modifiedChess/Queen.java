@@ -21,7 +21,7 @@ public class Queen extends ChessPiece {
 	@Override
 	public ArrayList<String> legalMoves() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<String>();
 	}
 
 }

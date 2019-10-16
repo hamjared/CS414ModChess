@@ -2,6 +2,8 @@ package modifiedChess;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,13 +40,14 @@ class QueenTest {
 	}
 
 	@Test
-	void testLegalMoves() {
-		fail("Not yet implemented");
+	void testLegalMoves() throws IllegalPositionException {
+		Queen queen = new Queen( new ChessBoard(), ChessPiece.Color.White);
+		queen.setPosition("e2");
+		
+		
+		assert(queen.legalMoves().isEmpty());
 	}
 
-	@Test
-	void testQueen() {
-		fail("Not yet implemented");
-	}
+
 
 }

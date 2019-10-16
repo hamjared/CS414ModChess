@@ -37,14 +37,14 @@ class KnightTest {
 		
 	}
 
-	@Test
-	void testLegalMoves() {
-		fail("Not yet implemented");
-	}
 
 	@Test
-	void testKnight() {
-		fail("Not yet implemented");
+	void testLegalMoves() throws IllegalPositionException {
+		Knight knight = new Knight( new ChessBoard(), ChessPiece.Color.White);
+		knight.setPosition("e2");
+		
+		
+		assert(knight.legalMoves().isEmpty());
 	}
 
 }
