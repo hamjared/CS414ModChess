@@ -39,6 +39,8 @@ public abstract class ChessPiece {
 			throw new IllegalPositionException();
 		
 	}
+	
+
 	abstract public String toString();
 	
 	abstract public ArrayList<String> legalMoves();

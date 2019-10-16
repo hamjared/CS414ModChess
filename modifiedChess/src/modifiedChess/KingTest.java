@@ -86,6 +86,28 @@ class KingTest {
 		assert(king.legalMoves().containsAll(expected));
 		
 	}
+	
+	@Test
+	void testLegalMoves4() throws IllegalPositionException {
+		// Assume white king is at location a1 with white piece at a2 and a black piece at b1 -> check valid moves are b2 b1
+		ChessBoard board = new ChessBoard();
+		
+		King whiteKing = new King(board, ChessPiece.Color.White);
+		board.placePiece(whiteKing, "a1");
+		Pawn whitePawn = new Pawn(board, ChessPiece.Color.White);
+		board.placePiece(whitePawn, "a2");
+		Knight blackKnight = new Knight(board, ChessPiece.Color.Black);
+		board.placePiece(blackKnight, "b1");
+		
+		ArrayList<String> expected = new ArrayList<>();
+		expected.add("b2");
+		expected.add("b1");
+		
+		
+	
+		assert(whiteKing.legalMoves().containsAll(expected));
+		
+	}
 
 
 
