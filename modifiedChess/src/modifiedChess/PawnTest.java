@@ -144,13 +144,35 @@ class PawnTest {
 		board.placePiece(pawn2, "d4");
 		
 		ArrayList<String> expected = new ArrayList<>();
-		expected.add("d3");
+		expected.add("d3"); 
 
 		
 		assert(pawn.legalMoves().containsAll(expected));
 		assert(pawn.legalMoves().size() == 1);
 
 		
+		
+	}
+	
+	@Test
+	void testLegalMovesWhite6() throws IllegalPositionException {
+		//place white pawn at a2 and black piece at b3, valid moves for white pawn should be a3 a4 b3
+		ChessBoard board = new ChessBoard();
+		
+		Pawn pawn = new Pawn(board,Color.White);
+		Queen queen = new Queen(board, Color.Black);
+		board.placePiece(pawn, "a2");
+		board.placePiece(queen, "b3");
+		
+		ArrayList<String> expected = new ArrayList<>();
+		expected.add("a3");
+		expected.add("b3");
+		expected.add("a4");
+
+		
+		assert(pawn.legalMoves().containsAll(expected));
+		assert(pawn.legalMoves().size() == 3);
+
 		
 	}
 	
@@ -174,17 +196,36 @@ class PawnTest {
 	
 	@Test
 	void testLegalMovesBlack2() throws IllegalPositionException {
-		//diagonal move
-		ChessBoard board = new ChessBoard();
-		board.initialize();
-		ChessPiece pawn = board.getPiece("d2");
-		assert(pawn instanceof Pawn); //double check
-		assert( pawn.getColor() == ChessPiece.Color.Black); //double check
-		
-		ArrayList<String> expected = new ArrayList<>();
-		// TODO
-		
-		assert(false);
+		//place black pawn at d7 and white piece at c6, valid moves for white pawn should be d5 d6 c6
+				ChessBoard board = new ChessBoard();
+				
+				Pawn pawn = new Pawn(board,Color.Black);
+				Queen queen = new Queen(board, Color.White);
+				board.placePiece(pawn, "d7");
+				board.placePiece(queen, "c6");
+				
+				ArrayList<String> expected = new ArrayList<>();
+				expected.add("c6");
+				expected.add("d5");
+				expected.add("d6");
+
+				
+				assert(pawn.legalMoves().containsAll(expected));
+				assert(pawn.legalMoves().size() == 3);
+				
+				// add a white piece to e6, expected now is be d5 d6 c6 e6
+				Rook rook = new Rook(board, Color.White);
+				board.placePiece(rook, "e6");
+				expected.add("e6");
+				assert(pawn.legalMoves().containsAll(expected));
+				assert(pawn.legalMoves().size() == expected.size());
+				
+				//change white piece at e6 to black, expected now d5 d6 c6
+				Rook rook2 = new Rook(board, Color.Black);
+				board.placePiece(rook2, "e6");
+				expected.remove("e6");
+				assert(pawn.legalMoves().containsAll(expected));
+				assert(pawn.legalMoves().size() == expected.size());
 		
 		
 	}
