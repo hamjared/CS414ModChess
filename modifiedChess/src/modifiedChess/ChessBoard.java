@@ -1,5 +1,6 @@
 package modifiedChess;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChessBoard {
@@ -36,6 +37,13 @@ public class ChessBoard {
 		
 	}
 	
+	private void removePieceFromPosition(String position) throws IllegalPositionException {
+		this.validatePosition(position);
+		int column = position.charAt(0) - 'a';
+		int row = position.charAt(1) - '1';
+		board[row][column] = null;
+	}
+	
 	public boolean placePiece(ChessPiece piece, String position) {
 		try {
 			piece.setPosition(position);
@@ -48,7 +56,20 @@ public class ChessBoard {
 	}
 	
 	public void move(String fromPosition, String toPosition) throws IllegalMoveException {
-		
+		try {
+			ChessPiece piece = this.getPiece(fromPosition);
+			ArrayList<String> legalMoves = piece.legalMoves();
+			if(legalMoves.contains(toPosition)) {
+				this.placePiece(piece, toPosition);
+				this.removePieceFromPosition(fromPosition);
+			}
+			else {
+				throw new IllegalMoveException();
+			}
+		} catch (IllegalPositionException e) {
+			// TODO Auto-generated catch block
+			throw new IllegalMoveException();
+		}
 	}
 	
 	private void placeRooks() {
