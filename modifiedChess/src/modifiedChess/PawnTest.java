@@ -8,6 +8,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import modifiedChess.ChessPiece.Color;
+
 class PawnTest {
 
 	static Pawn blackPawn;
@@ -60,18 +62,36 @@ class PawnTest {
 	
 	@Test
 	void testLegalMovesWhite2() throws IllegalPositionException {
-		//diagonal move
+		//place white pawn at d2 and black piece at c3, valid moves for white pawn should be c3 d3 d4
 		ChessBoard board = new ChessBoard();
-		board.initialize();
-		ChessPiece pawn = board.getPiece("d2");
-		assert(pawn instanceof Pawn); //double check
-		assert( pawn.getColor() == ChessPiece.Color.White); //double check
+		
+		Pawn pawn = new Pawn(board,Color.White);
+		Queen queen = new Queen(board, Color.Black);
+		board.placePiece(pawn, "d2");
+		board.placePiece(queen, "c3");
 		
 		ArrayList<String> expected = new ArrayList<>();
+		expected.add("c3");
+		expected.add("d3");
+		expected.add("d4");
 
 		
-		assert(false);
+		assert(pawn.legalMoves().containsAll(expected));
+		assert(pawn.legalMoves().size() == 3);
 		
+		// add a black piece to e3, expected now is c3 d3 d4 e3
+		Rook rook = new Rook(board, Color.Black);
+		board.placePiece(rook, "e3");
+		expected.add("e3");
+		assert(pawn.legalMoves().containsAll(expected));
+		assert(pawn.legalMoves().size() == expected.size());
+		
+		//change black piece at e3 to white, expected now c3 d3 d4
+		Rook rook2 = new Rook(board, Color.White);
+		board.placePiece(rook2, "e3");
+		expected.remove("e3");
+		assert(pawn.legalMoves().containsAll(expected));
+		assert(pawn.legalMoves().size() == expected.size());
 		
 	}
 	

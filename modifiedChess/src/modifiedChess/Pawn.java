@@ -24,7 +24,7 @@ public class Pawn extends ChessPiece {
 		ArrayList<String> legalMovesArray = new ArrayList<>();
 		
 		this.addForwardMove(legalMovesArray,1);
-		this.addDiagonalMove(legalMovesArray);
+		this.addDiagonalMoves(legalMovesArray);
 		
 		if ( ((this.row + 1) == 2 && this.color == ChessPiece.Color.White) || 
 				((this.row + 1) == 7 && this.color == ChessPiece.Color.Black)) {
@@ -76,7 +76,25 @@ public class Pawn extends ChessPiece {
 		return false;
 	}
 	
-	private void addDiagonalMoves(ArrayList<String> legalMovesArray) {
+	private void addDiagonalMoves(ArrayList<String> legalMovesArray)  {
+		int rowDirection = 1;
+		Color captureColor = ChessPiece.Color.Black;
+		if (this.color == ChessPiece.Color.Black) {
+			rowDirection = -1;
+			captureColor = ChessPiece.Color.White;
+		}
+		
+		for (int c = -1; c <= 1; c+=2) {
+			try {
+				String newPosition = this.newPositionStringForm(rowDirection, c);
+				if(this.board.getPiece(newPosition) != null) {
+					if(this.board.getPiece(newPosition).color == captureColor)
+						legalMovesArray.add(newPosition);
+				}
+			} catch (IllegalPositionException e) {
+			 
+			}
+		}
 		
 	}
 	
